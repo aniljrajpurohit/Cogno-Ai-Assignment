@@ -1,10 +1,15 @@
 from django.contrib import messages, auth
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 
 def home(request):
-    return render(request, "home.html")
+    if request.user.is_authenticated:
+        redirect("restaurants")
+        return render(request, "restaurants.html")
+    else:
+        return render(request, "home.html")
 
 
 def login(request):
@@ -13,12 +18,19 @@ def login(request):
         password = request.POST['password']
         user = auth.authenticate(username=username, password=password)
         if user:
-            return redirect("/")
+            auth.login(request, user)
+            return redirect("/restaurants")
         else:
             messages.error(request, 'Username or password incorrect')
             return render(request, "login.html")
     else:
         return render(request, "login.html")
+
+
+def logout(request):
+    if request.user.is_authenticated:
+        auth.logout(request)
+        return redirect("/")
 
 
 def register(request):
@@ -46,3 +58,8 @@ def register(request):
             return render(request, "login.html")
     else:
         return render(request, "register.html")
+
+
+@login_required
+def restaurants(request):
+    return render(request, "restaurants.html")
