@@ -98,3 +98,32 @@ def place_order(request):
         }
         return_data = json.dumps(send_data)
         return JsonResponse(return_data, safe=False)
+
+
+@csrf_protect
+def my_orders(request):
+    return render(request, "my-orders.html")
+
+
+@csrf_protect
+def get_my_orders(request):
+    if request.method == 'GET':
+        orders = OrderPlaced.objects.filter(user=request.user)
+        data = []
+        for order in orders:
+            data.append({'dishName': order.dish.dish_name, 'Price': order.dish.price,
+                         'restaurantName': order.rest_name.rest_name, 'dateOrdered': order.date.strftime('%d-%m-%Y')})
+        send_data = {
+            "data": data,
+            "orderPlaced": True
+        }
+        return_data = json.dumps(send_data)
+        return JsonResponse(return_data, safe=False)
+    else:
+        send_data = {
+            "status": "error",
+            "message": "Method not allowed",
+            "orderPlaced": False
+        }
+        return_data = json.dumps(send_data)
+        return JsonResponse(return_data, safe=False)

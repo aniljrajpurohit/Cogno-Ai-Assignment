@@ -21,4 +21,6 @@ urlpatterns = [
     path('get-restaurants', views.get_restaurants, name="get-restaurants"),
     path('get-dishes', views.get_dishes, name="get-dishes"),
     path('place-order', views.place_order, name="place-order"),
+    path('my-orders', views.my_orders, name="my-orders"),
+    path('get-my-orders', views.get_my_orders, name="get-my-orders"),
 ]

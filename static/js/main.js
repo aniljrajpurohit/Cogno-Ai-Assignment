@@ -181,3 +181,40 @@ function placeOrder() {
         }
     });
 }
+
+function showMyOrders() {
+    let csrfToken = getCookie('csrftoken');    // For CSRF verification
+    let sendData = JSON.stringify({});
+    $.ajax({
+        method: "GET",
+        beforeSend: function (request, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                request.setRequestHeader("X-CSRFToken", csrfToken);
+            }
+        },
+        url: "/restaurants/get-my-orders",
+        data: sendData,
+        dataType: "json",
+        success: function (data) {
+            let returnData = JSON.parse(data);
+            console.log(returnData);
+            if (returnData.data.length) {
+                document.getElementById("no-orders-message").style.display = 'none';
+                document.getElementById('my-orders-table').style.display = 'table';
+                returnData.data.forEach(order => {
+                    document.getElementById('my-orders-table-body').innerHTML += `
+                        <tr>
+                            <td>${order.dishName}</td>
+                            <td>${order.restaurantName}</td>
+                            <td>${order.Price}</td>
+                            <td>${order.dateOrdered}</td>
+                        </tr>`;
+                });
+                $('#my-orders-table').DataTable();
+            } else {
+                document.getElementById("no-orders-message").style.display = 'block';
+                document.getElementById('my-orders-table').style.display = 'none';
+            }
+        }
+    });
+}

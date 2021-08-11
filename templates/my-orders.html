@@ -31,6 +31,7 @@
             }
         }
     </style>
+    <link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="{% static 'css/header.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
@@ -44,8 +45,8 @@
                 </a>
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                    <li><a href="/restaurants" class="nav-link px-2 text-secondary">Restaurants</a></li>
-                    <li><a href="/restaurants/my-orders" class="nav-link px-2 text-white">My Orders</a></li>
+                    <li><a href="/restaurants" class="nav-link px-2 text-white">Restaurants</a></li>
+                    <li><a href="#" class="nav-link px-2 text-secondary">My Orders</a></li>
                 </ul>
 
                 <div class="text-end">
@@ -60,41 +61,28 @@
             </div>
         </div>
     </header>
+
     <div class="container">
-        <h2 class="mb-5" id="heading">Pick a Restaurant</h2>
-        <div class="row" id="restaurant-container"></div>
-        <div class="row" style="display: none;" id="dishes-parent-container">
-            <div class="col-md-8">
-                <div class="row" id="dishes-container"></div>
-            </div>
-            <div class="col-md-4">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <h5 class="card-title">Your Order</h5>
-                        <hr/>
-                        <div id="selected-items">
-                            No items selected
-                        </div>
-                        <hr/>
-                        <div class="row text-end" style="padding-left: 20px; padding-right: 20px;">
-                            <div class="col-6">
-                                <h6>Total</h6>
-                            </div>
-                            <div class="col-6">
-                                <h6 id="total-price"><i class="uil uil-rupee-sign"></i>0</h6>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary mt-2" onclick="placeOrder()">Place Order</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <h3 class="text-center" id="no-orders-message" style="display: none;">No orders placed yet!</h3>
+        <table id="my-orders-table" class="display" style="width:100%; display: none;">
+            <thead>
+            <tr>
+                <th>Dish Name</th>
+                <th>Restaurant Name</th>
+                <th>Price</th>
+                <th>Date Ordered</th>
+            </tr>
+            </thead>
+            <tbody id="my-orders-table-body">
+            </tbody>
+        </table>
     </div>
 {% endblock %}
 {% block js %}
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function () {
-            showRestaurants();
+            showMyOrders();
         });
     </script>
 {% endblock %}
