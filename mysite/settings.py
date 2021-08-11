@@ -22,9 +22,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vs)$9f(hyysn^zw41cbjplam%#tr9n0o&q=_d3guehda5@+#9%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['foodapp-cognoai.herokuapp.com', '127.0.0.1']
 
 # Application definition
 
