@@ -1,7 +1,11 @@
+import json
+
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_protect
 
 
 def home(request):
@@ -58,8 +62,3 @@ def register(request):
             return render(request, "login.html")
     else:
         return render(request, "register.html")
-
-
-@login_required
-def restaurants(request):
-    return render(request, "restaurants.html")

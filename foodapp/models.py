@@ -20,11 +20,12 @@ class Dishes(models.Model):
 
 
 class OrderPlaced(models.Model):
+    order_id = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     rest_name = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     dish = models.ForeignKey(Dishes, on_delete=models.CASCADE)
     total_price = models.IntegerField(default=0)
-    date = models.DateField()
+    date = models.DateField(auto_now=True)
 
     def __str__(self):
         return self.user.username

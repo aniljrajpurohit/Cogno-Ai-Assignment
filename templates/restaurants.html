@@ -16,11 +16,25 @@
                 font-size: 3.5rem;
             }
         }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
     </style>
-    <link href="{% static 'header.css' %}" rel="stylesheet">
+    <link href="{% static 'css/header.css' %}" rel="stylesheet">
 {% endblock %}
 {% block body %}
-    <header class="p-3 bg-dark text-white">
+    <header class="p-3 bg-dark text-white mb-5">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -31,15 +45,12 @@
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="/" class="nav-link px-2 text-secondary">Restaurants</a></li>
-                    {#                    <li><a href="#" class="nav-link px-2 text-white">Features</a></li>#}
-                    {#                    <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>#}
-                    {#                    <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>#}
                     <li><a href="#" class="nav-link px-2 text-white">My Orders</a></li>
                 </ul>
 
                 <div class="text-end">
                     <div>
-                        Hello {{ request.user.username }} !
+                        Hello {{ request.user.first_name }} {{ request.user.last_name }} !
                         <a href="/accounts/logout" class="btn btn-outline-light me-2" style="margin-left: 10px;">
                             Logout
                         </a>
@@ -49,5 +60,46 @@
             </div>
         </div>
     </header>
+    <div class="container">
+        <h2 class="mb-5" id="heading">Pick a Restaurant</h2>
+        <div class="row" id="restaurant-container"></div>
+        <div class="row" style="display: none;" id="dishes-parent-container">
+            <div class="col-md-8">
+                <div class="row" id="dishes-container"></div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <h5 class="card-title">Your Order</h5>
+                        <hr/>
+                        <div id="selected-items">
+                            No items selected
+                        </div>
+                        <hr/>
+                        <div class="row text-end" style="padding-left: 20px; padding-right: 20px;">
+                            <div class="col-6">
+                                <h6>Total</h6>
+                            </div>
+                            <div class="col-6">
+                                <h6 id="total-price"><i class="uil uil-rupee-sign"></i>0</h6>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary mt-2" onclick="placeOrder()">Place Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container">
+            <span class="text-muted">Place sticky footer content here.</span>
+        </div>
+    </footer>
 {% endblock %}
-{% block js %}{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            showRestaurants();
+        });
+    </script>
+{% endblock %}
