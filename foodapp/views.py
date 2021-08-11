@@ -47,7 +47,7 @@ def register(request):
 
         if User.objects.filter(username=username).exists():
             messages.error(request, 'Username not available!')
-            redirect("register")
+            redirect("accounts/register")
             return render(request, "register.html")
         elif User.objects.filter(email=email).exists():
             messages.error(request, 'Already registered on this Email!')
@@ -57,7 +57,7 @@ def register(request):
             user = User.objects.create_user(username=username, password=password, email=email, first_name=first_name,
                                             last_name=last_name)
             user.save()
-            redirect("login")
+            redirect("accounts/login")
             messages.success(request, 'Registered Successfully! Login to continue')
             return render(request, "login.html")
     else:
