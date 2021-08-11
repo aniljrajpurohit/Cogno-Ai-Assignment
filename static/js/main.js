@@ -115,13 +115,13 @@ function selectDish(dishId) {
         <div class="card text-center mb-2" id="dish-${dishId}">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-8">
+                    <div class="col-7">
                         <h6 class="card-title">${selectedDish.dishName}</h6>
                     </div>
                     <div class="col-2 text-end">
                         <span style="cursor: pointer;" onclick="removeDish(${dishId})"><i class="uil uil-trash-alt"></i></span>
                     </div>
-                    <div class="col-2 text-end">
+                    <div class="col-3 text-end">
                         <h6><i class="uil uil-rupee-sign"></i>${selectedDish.price}</h6>
                     </div>
                 </div>
